@@ -1,276 +1,284 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>10 and 2 Talent — Coming Soon</title>
-  <meta name="description" content="10 and 2 Talent is coming soon. Leave your details and we'll be in touch." />
+  <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>10 and 2 Talent — Coming Soon</title>
+    <meta name="description" content="10 and 2 Talent is coming soon. Leave your details and we'll be in touch." />
+  
+    <!-- Open Graph (for nice link previews when shared) -->
+    <meta property="og:title" content="10 and 2 Talent — Coming Soon" />
+    <meta property="og:description" content="Something new is on the way. Leave your details and we'll be in touch." />
+    <meta property="og:type" content="website" />
+  
+    <style>
+          :root {
+                  --bg: #0a0a0b;
+                  --bg-elev: #141416;
+                  --fg: #f2f2f0;
+                  --muted: #8a8a85;
+                  --line: #2a2a2e;
+                  --accent: #f2f2f0;
+                  --accent-fg: #0a0a0b;
+          }
 
-  <!-- Open Graph (for nice link previews when shared) -->
-  <meta property="og:title" content="10 and 2 Talent — Coming Soon" />
-  <meta property="og:description" content="Something new is on the way. Leave your details and we'll be in touch." />
-  <meta property="og:type" content="website" />
+          * { box-sizing: border-box; }
 
-  <style>
-    :root {
-      --bg: #0a0a0b;
-      --bg-elev: #141416;
-      --fg: #f2f2f0;
-      --muted: #8a8a85;
-      --line: #2a2a2e;
-      --accent: #f2f2f0;
-      --accent-fg: #0a0a0b;
-    }
+          html, body { height: 100%; }
 
-    * { box-sizing: border-box; }
+          body {
+                  margin: 0;
+                  background: var(--bg);
+                  color: var(--fg);
+                  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+                  -webkit-font-smoothing: antialiased;
+                  display: flex;
+                  flex-direction: column;
+                  min-height: 100vh;
+                  line-height: 1.5;
+          }
 
-    html, body { height: 100%; }
+          /* Subtle radial glow behind the content */
+          body::before {
+                  content: "";
+                  position: fixed;
+                  inset: 0;
+                  background: radial-gradient(60% 50% at 50% 35%, rgba(255,255,255,0.05), transparent 70%);
+                  pointer-events: none;
+          }
 
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--fg);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-      -webkit-font-smoothing: antialiased;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      line-height: 1.5;
-    }
+          main {
+                  flex: 1;
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  justify-content: center;
+                  text-align: center;
+                  padding: 48px 24px;
+                  position: relative;
+          }
 
-    /* Subtle radial glow behind the content */
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background: radial-gradient(60% 50% at 50% 35%, rgba(255,255,255,0.05), transparent 70%);
-      pointer-events: none;
-    }
+          .eyebrow {
+                  font-size: 13px;
+                  letter-spacing: 0.28em;
+                  text-transform: uppercase;
+                  color: var(--muted);
+                  margin: 0 0 28px;
+          }
 
-    main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 48px 24px;
-      position: relative;
-    }
+          .wordmark {
+                  font-size: clamp(40px, 9vw, 88px);
+                  font-weight: 600;
+                  letter-spacing: -0.02em;
+                  margin: 0;
+                  line-height: 1.05;
+          }
 
-    .eyebrow {
-      font-size: 13px;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin: 0 0 28px;
-    }
+          .wordmark .num { font-weight: 300; }
 
-    .wordmark {
-      font-size: clamp(40px, 9vw, 88px);
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      margin: 0;
-      line-height: 1.05;
-    }
+          .tagline {
+                  margin: 22px auto 0;
+                  max-width: 460px;
+                  color: var(--muted);
+                  font-size: clamp(15px, 2.4vw, 18px);
+          }
 
-    .wordmark .num { font-weight: 300; }
+          /* Form */
+          form {
+                  margin-top: 44px;
+                  width: 100%;
+                  max-width: 420px;
+                  display: flex;
+                  flex-direction: column;
+                  gap: 12px;
+                  text-align: left;
+          }
 
-    .tagline {
-      margin: 22px auto 0;
-      max-width: 460px;
-      color: var(--muted);
-      font-size: clamp(15px, 2.4vw, 18px);
-    }
+          .field-label {
+                  font-size: 13px;
+                  color: var(--muted);
+                  margin-bottom: 4px;
+                  display: block;
+          }
 
-    /* Form */
-    form {
-      margin-top: 44px;
-      width: 100%;
-      max-width: 420px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      text-align: left;
-    }
+          input, textarea {
+                  width: 100%;
+                  background: var(--bg-elev);
+                  border: 1px solid var(--line);
+                  border-radius: 10px;
+                  color: var(--fg);
+                  font: inherit;
+                  font-size: 15px;
+                  padding: 13px 14px;
+                  outline: none;
+                  transition: border-color 0.15s ease, background 0.15s ease;
+          }
 
-    .field-label {
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 4px;
-      display: block;
-    }
+          input::placeholder, textarea::placeholder { color: #5a5a57; }
 
-    input, textarea {
-      width: 100%;
-      background: var(--bg-elev);
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      color: var(--fg);
-      font: inherit;
-      font-size: 15px;
-      padding: 13px 14px;
-      outline: none;
-      transition: border-color 0.15s ease, background 0.15s ease;
-    }
+          input:focus, textarea:focus {
+                  border-color: #555;
+                  background: #18181b;
+          }
 
-    input::placeholder, textarea::placeholder { color: #5a5a57; }
+          textarea { resize: vertical; min-height: 72px; }
 
-    input:focus, textarea:focus {
-      border-color: #555;
-      background: #18181b;
-    }
+          button {
+                  margin-top: 6px;
+                  background: var(--accent);
+                  color: var(--accent-fg);
+                  border: none;
+                  border-radius: 10px;
+                  font: inherit;
+                  font-weight: 600;
+                  font-size: 15px;
+                  padding: 14px 16px;
+                  cursor: pointer;
+                  transition: opacity 0.15s ease, transform 0.05s ease;
+          }
 
-    textarea { resize: vertical; min-height: 72px; }
+          button:hover { opacity: 0.88; }
+          button:active { transform: translateY(1px); }
+          button:disabled { opacity: 0.5; cursor: default; }
 
-    button {
-      margin-top: 6px;
-      background: var(--accent);
-      color: var(--accent-fg);
-      border: none;
-      border-radius: 10px;
-      font: inherit;
-      font-weight: 600;
-      font-size: 15px;
-      padding: 14px 16px;
-      cursor: pointer;
-      transition: opacity 0.15s ease, transform 0.05s ease;
-    }
+          .status {
+                  margin-top: 14px;
+                  font-size: 14px;
+                  min-height: 20px;
+          }
+          .status.success { color: #7fdca4; }
+          .status.error { color: #e08585; }
 
-    button:hover { opacity: 0.88; }
-    button:active { transform: translateY(1px); }
-    button:disabled { opacity: 0.5; cursor: default; }
+          /* Success panel that replaces the form */
+          .thanks {
+                  margin-top: 44px;
+                  max-width: 420px;
+                  padding: 28px 24px;
+                  border: 1px solid var(--line);
+                  border-radius: 14px;
+                  background: var(--bg-elev);
+                  display: none;
+          }
+          .thanks h2 { margin: 0 0 8px; font-size: 20px; }
+          .thanks p { margin: 0; color: var(--muted); font-size: 15px; }
 
-    .status {
-      margin-top: 14px;
-      font-size: 14px;
-      min-height: 20px;
-    }
-    .status.success { color: #7fdca4; }
-    .status.error { color: #e08585; }
+          footer {
+                  text-align: center;
+                  padding: 28px 24px;
+                  color: #5a5a57;
+                  font-size: 13px;
+                  position: relative;
+          }
 
-    /* Success panel that replaces the form */
-    .thanks {
-      margin-top: 44px;
-      max-width: 420px;
-      padding: 28px 24px;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: var(--bg-elev);
-      display: none;
-    }
-    .thanks h2 { margin: 0 0 8px; font-size: 20px; }
-    .thanks p { margin: 0; color: var(--muted); font-size: 15px; }
+          footer a { color: var(--muted); text-decoration: none; }
+          footer a:hover { color: var(--fg); }
+        </style>
+  </head>
+  <body>
+      <main>
+            <p class="eyebrow">Coming Soon</p>p>
 
-    footer {
-      text-align: center;
-      padding: 28px 24px;
-      color: #5a5a57;
-      font-size: 13px;
-      position: relative;
-    }
+            <h1 class="wordmark"><span class="num">10</span>span> and <span class="num">2</span>span> Talent</h1>h1>
 
-    footer a { color: var(--muted); text-decoration: none; }
-    footer a:hover { color: var(--fg); }
-  </style>
-</head>
-<body>
-  <main>
-    <p class="eyebrow">Coming Soon</p>
+            <p class="tagline">
+                    We're building a network of the best global creative talent.
+                    Leave your details:
+            </p>p>
 
-    <h1 class="wordmark"><span class="num">10</span> and <span class="num">2</span> Talent</h1>
+            <!-- ============================================================
+                 SETUP: Replace YOUR_FORM_ID below with your Formspree form ID.
+                 1. Go to https://formspree.io and create a free account.
+                 2. Create a new form (point it at your email).
+                 3. Copy the form's endpoint, e.g. https://formspree.io/f/abcdwxyz
+                 4. Paste just the ID (abcdwxyz) in place of YOUR_FORM_ID.
+                 Every submission is then saved in your Formspree dashboard
+                 AND emailed to you. No server required.
+                 ============================================================ -->
+            <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                    <div>
+                              <label class="field-label" for="name">Name</label>label>
+                              <input id="name" name="name" type="text" placeholder="Your name" required />
+                    </div>
+                    <div>
+                              <label class="field-label" for="email">Email</label>label>
+                              <input id="email" name="email" type="email" placeholder="you@example.com" required />
+                    </div>
+                    <div>
+                              <label class="field-label" for="message">What can we help with? <span style="opacity:.6">(optional)</span>span></label>label>
+                              <textarea id="message" name="message" placeholder="Tell us a little about you or your project"></textarea>
+                    </div>
+                    <button type="submit" id="submit-btn">Keep me posted</button>button>
+                    <p class="status" id="status" role="status" aria-live="polite"></p>p>
+            </form>form>
 
-    <p class="tagline">
-      We're building a network of the best global creative talent.
-      Leave your details:
-    </p>
+            <div class="thanks" id="thanks">
+                    <h2>You're on the list.</h2>
+                  <p>Thanks for reaching out — we'll be in touch soon.</p>
+            </div>
+      </main>
+  
+    <footer>
+          &copy; <span id="year"></span>span> 10 and 2 Talent &nbsp;·&nbsp;
+          <a href="mailto:info@10and2.com">info@10and2.com</a>a>
+    </footer>
 
-    <!-- ============================================================
-         SETUP: Replace YOUR_FORM_ID below with your Formspree form ID.
-         1. Go to https://formspree.io and create a free account.
-         2. Create a new form (point it at your email).
-         3. Copy the form's endpoint, e.g. https://formspree.io/f/abcdwxyz
-         4. Paste just the ID (abcdwxyz) in place of YOUR_FORM_ID.
-         Every submission is then saved in your Formspree dashboard
-         AND emailed to you. No server required.
-         ============================================================ -->
-    <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-      <div>
-        <label class="field-label" for="name">Name</label>
-        <input id="name" name="name" type="text" placeholder="Your name" required />
-      </div>
-      <div>
-        <label class="field-label" for="email">Email</label>
-        <input id="email" name="email" type="email" placeholder="you@example.com" required />
-      </div>
-      <div>
-        <label class="field-label" for="message">What can we help with? <span style="opacity:.6">(optional)</span></label>
-        <textarea id="message" name="message" placeholder="Tell us a little about you or your project"></textarea>
-      </div>
-      <button type="submit" id="submit-btn">Keep me posted</button>
-      <p class="status" id="status" role="status" aria-live="polite"></p>
-    </form>
+      <script>
+            document.getElementById("year").textContent = new Date().getFullYear();
 
-    <div class="thanks" id="thanks">
-      <h2>You're on the list.</h2>
-      <p>Thanks for reaching out — we'll be in touch soon.</p>
-    </div>
-  </main>
+            const form = document.getElementById("contact-form");
+            const statusEl = document.getElementById("status");
+            const btn = document.getElementById("submit-btn");
+            const thanks = document.getElementById("thanks");
 
-  <footer>
-    &copy; <span id="year"></span> 10 and 2 Talent &nbsp;·&nbsp;
-    <a href="mailto:hello@10and2talent.com">hello@10and2talent.com</a>
-  </footer>
+            form.addEventListener("submit", async function (e) {
+                    e.preventDefault();
+                    statusEl.className = "status";
+                    statusEl.textContent = "";
 
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
+                    // Guard against forgetting to set the Formspree ID.
+                    if (form.action.includes("YOUR_FORM_ID")) {
+                              statusEl.className = "status error";
+                              statusEl.textContent = "Form isn't connected yet. (Set your Formspree ID in index.html.)";
+                              return;
+                    }
 
-    const form = document.getElementById("contact-form");
-    const statusEl = document.getElementById("status");
-    const btn = document.getElementById("submit-btn");
-    const thanks = document.getElementById("thanks");
+                    btn.disabled = true;
+                    btn.textContent = "Sending…";
 
-    form.addEventListener("submit", async function (e) {
-      e.preventDefault();
-      statusEl.className = "status";
-      statusEl.textContent = "";
+                    try {
+                              const res = await fetch(form.action, {
+                                          method: "POST",
+                                          body: new FormData(form),
+                                          headers: { Accept: "application/json" },
+                              });
 
-      // Guard against forgetting to set the Formspree ID.
-      if (form.action.includes("YOUR_FORM_ID")) {
-        statusEl.className = "status error";
-        statusEl.textContent = "Form isn't connected yet. (Set your Formspree ID in index.html.)";
-        return;
-      }
-
-      btn.disabled = true;
-      btn.textContent = "Sending…";
-
-      try {
-        const res = await fetch(form.action, {
-          method: "POST",
-          body: new FormData(form),
-          headers: { Accept: "application/json" },
-        });
-
-        if (res.ok) {
-          form.style.display = "none";
-          thanks.style.display = "block";
-        } else {
-          const data = await res.json().catch(() => ({}));
-          statusEl.className = "status error";
-          statusEl.textContent =
-            (data.errors && data.errors[0] && data.errors[0].message) ||
-            "Something went wrong. Please try again.";
-          btn.disabled = false;
-          btn.textContent = "Keep me posted";
-        }
-      } catch (err) {
-        statusEl.className = "status error";
-        statusEl.textContent = "Network error. Please try again.";
-        btn.disabled = false;
-        btn.textContent = "Keep me posted";
-      }
-    });
-  </script>
-</body>
-</html>
+                              if (res.ok) {
+                                          form.style.display = "none";
+                                          thanks.style.display = "block";
+                              } else {
+                                          const data = await res.json().catch(() => ({}));
+                                          statusEl.className = "status error";
+                                          statusEl.textContent =
+                                                        (data.errors && data.errors[0] && data.errors[0].message) ||
+                                                        "Something went wrong. Please try again.";
+                                          btn.disabled = false;
+                                          btn.textContent = "Keep me posted";
+                              }
+                    } catch (err) {
+                              statusEl.className = "status error";
+                              statusEl.textContent = "Network error. Please try again.";
+                              btn.disabled = false;
+                              btn.textContent = "Keep me posted";
+                    }
+            });
+      </script>
+  </body>
+</html>html>
+      </script>
+    </footer></p></h2>
+                    </div>
+                    </div>
+      </main>
+  </body>
+    </style></title>
+  </head>
