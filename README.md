@@ -33,6 +33,5 @@ npm run preview
 - Beats 1–2: compact — wordmark + single copy line
 
 ## Contacts
-- Sr. Agent: Meredith Rodriguez — meredith@10and2.com
-- General: contact@10and2.com
+- General: info@10and2talent.com
 - 220 W Ivy Ave, Inglewood, CA 90302

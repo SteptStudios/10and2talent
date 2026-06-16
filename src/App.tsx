@@ -182,15 +182,6 @@ function Contact() {
         <Reveal delay={0.16}>
           <div className="contact__row">
             <div className="contact__col">
-              <h4>Sr. Agent</h4>
-              <p>Meredith Rodriguez</p>
-              <p>
-                <a href="mailto:meredith@10and2talent.com" className="link-line">
-                  meredith@10and2talent.com
-                </a>
-              </p>
-            </div>
-            <div className="contact__col">
               <h4>General Inquiries</h4>
               <p>
                 <a href="mailto:info@10and2talent.com" className="link-line">
