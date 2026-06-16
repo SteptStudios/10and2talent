@@ -22,33 +22,6 @@ const BEATS = [
   },
 ];
 
-const SERVICES = [
-  {
-    no: "01",
-    name: "Business Development",
-    desc: "Opening doors — brands, agencies, and publishers looking for creative talent.",
-    tags: ["Brand Partnerships", "Agency Relations", "Publishing"],
-  },
-  {
-    no: "02",
-    name: "Marketing Services",
-    desc: "Positioning talent with work and narrative that earns the right rooms.",
-    tags: ["Portfolio Strategy", "Positioning", "Press"],
-  },
-  {
-    no: "03",
-    name: "Deal Negotiation",
-    desc: "Structure, rate, and terms negotiated by agents who know the market.",
-    tags: ["Contracts", "Rates", "Licensing"],
-  },
-  {
-    no: "04",
-    name: "Vendor Curation",
-    desc: "The right crew, partners, and vendors for every production context.",
-    tags: ["Production", "Crew", "Post"],
-  },
-];
-
 /* ----------------------------------------------------------------
    scroll reveal helper
    ---------------------------------------------------------------- */
