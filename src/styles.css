@@ -180,6 +180,14 @@ button {
   font-weight: 400;
   color: var(--muted);
 }
+.roster__note {
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  color: var(--ink-mid);
+  max-width: 52ch;
+  line-height: 1.6;
+  margin-top: calc(var(--space-2xl) * -1 + var(--space-md));
+}
 
 /* --- buttons / links --- */
 .btn {
@@ -292,6 +300,13 @@ button {
   height: 28px;
   width: auto;
   transition: filter 0.3s ease;
+  background: transparent;
+}
+/* red circle badge variant — square, no filter invert */
+.brand__logo--badge {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
 }
 .nav__links {
   display: flex;
@@ -410,6 +425,8 @@ button {
   }
   .beat__img {
     position: absolute;
+    /* pin to top 20% so eyes stay in frame on narrow viewports */
+    object-position: 50% 20%;
   }
 
 }

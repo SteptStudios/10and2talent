@@ -89,17 +89,17 @@ function Beat({ beat, index }: { beat: typeof BEATS[0]; index: number }) {
     <section className="beat" id={isFirst ? "top" : undefined}>
       {/* left panel — white, editorial */}
       <div className="beat__left">
-        {/* wordmark — full-bleed every beat */}
-        <motion.div
-          className="beat__mark-wrap"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isFirst ? { opacity: 1, y: 0 } : undefined}
-          whileInView={!isFirst ? { opacity: 1, y: 0 } : undefined}
-          viewport={!isFirst ? { once: true, margin: "-10% 0px" } : undefined}
-          transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: isFirst ? 0.05 : 0 }}
-        >
-          <img src="/logo-wordmark.png" alt="10&2" className="beat__mark" />
-        </motion.div>
+        {/* wordmark — first beat only */}
+        {isFirst && (
+          <motion.div
+            className="beat__mark-wrap"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.05 }}
+          >
+            <img src="/logo-wordmark.png" alt="10&2" className="beat__mark" />
+          </motion.div>
+        )}
 
         {/* copy line — same structure all three beats */}
         {isFirst ? (
@@ -149,19 +149,12 @@ function Artists() {
             <span className="section-index">01 — Artists</span>
           </div>
         </Reveal>
-        <div className="artists__grid">
-          <Reveal>
-            <div className="artists__empty">
-              <p>
-                Our roster is curated by submission. Directors, photographers,
-                and creative talent — built for brands that refuse the forgettable.
-              </p>
-              <a href="mailto:contact@10and2.com">
-                Contact us for artist submissions and portfolios →
-              </a>
-            </div>
-          </Reveal>
-        </div>
+        <Reveal delay={0.1}>
+          <p className="roster__note">
+            Our roster is curated by submission — directors, photographers, and
+            creative talent built for brands that refuse the forgettable.
+          </p>
+        </Reveal>
       </div>
     </section>
   );
@@ -183,7 +176,7 @@ function Contact() {
             <br />
             the best.
             <br />
-            <a href="mailto:contact@10and2.com">Let's talk →</a>
+            <a href="mailto:info@10and2talent.com">Let's talk →</a>
           </p>
         </Reveal>
         <Reveal delay={0.16}>
@@ -192,16 +185,16 @@ function Contact() {
               <h4>Sr. Agent</h4>
               <p>Meredith Rodriguez</p>
               <p>
-                <a href="mailto:meredith@10and2.com" className="link-line">
-                  meredith@10and2.com
+                <a href="mailto:meredith@10and2talent.com" className="link-line">
+                  meredith@10and2talent.com
                 </a>
               </p>
             </div>
             <div className="contact__col">
               <h4>General Inquiries</h4>
               <p>
-                <a href="mailto:contact@10and2.com" className="link-line">
-                  contact@10and2.com
+                <a href="mailto:info@10and2talent.com" className="link-line">
+                  info@10and2talent.com
                 </a>
               </p>
             </div>
