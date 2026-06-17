@@ -1,13 +1,13 @@
 # 10&2 Talent — Hosting & Sites-Droplet Plan
 
-> **Status:** Proposal for review — *not yet built.* Captured so it can inform the design/build phase.
+> **Status:** `dev.10and2talent.com` near-term hosting is **✅ LIVE (2026-06-16)**; the dedicated **sites-droplet remains a proposal** for review.
 > **Date:** 2026-06-16 · **Author:** Nate (with Claude) · **Builds on:** [`HANDOFF.md`](../HANDOFF.md) (Erich Roepke)
 
 ---
 
 ## TL;DR
 
-- **Near-term (decided):** `dev.10and2talent.com` (auth-gated / internal) runs on the **existing Stept dev droplet** — no new infrastructure. The public apex `10and2talent.com` **stays on GitHub Pages, untouched.**
+- **Near-term (✅ LIVE 2026-06-16):** `dev.10and2talent.com` (auth-gated / internal) runs on the **existing Stept dev droplet** — no new infrastructure. The public apex `10and2talent.com` **stays on GitHub Pages, untouched.**
 - **Future direction (this proposal, deferred):** a dedicated, low-cost **"sites" droplet** to host all Stept public brand websites — `steptstudios.com`, `lockt-post.com`, `vaultcinemarentals.com`, and `10and2talent.com` — cleanly separated from the auth/intranet stack.
 - **For Erich to weigh in on:** whether to bless the sites-droplet direction, the droplet size/naming, and when (if ever) to migrate the `10and2talent.com` apex off GitHub Pages onto it.
 
@@ -45,18 +45,29 @@ The edge box is the **auth + prod-intranet critical host** and is already tight.
 
 ---
 
-## Near-term plan (no new infra)
+## Near-term hosting — ✅ AS-BUILT (LIVE 2026-06-16)
 
-Host `dev.10and2talent.com` on the **existing dev droplet**, gated by the existing Authentik — mirroring the `dev.steptstudios.com` pattern:
+`dev.10and2talent.com` runs on the **existing dev droplet**, gated by the existing Authentik — mirroring the `dev.steptstudios.com` pattern. **Cost: $0** (reuses both droplets + Authentik). Public apex `10and2talent.com` **stays on GitHub Pages**.
 
 ```
-GoDaddy A record  dev.10and2talent.com → edge droplet public IP
-   └→ edge Caddy vhost  dev.10and2talent.com  (forward_auth → Authentik)
-        └→ reverse_proxy over Tailscale → 10&2 dev container on dev-stept-intranet
+GoDaddy A  dev.10and2talent.com → 209.38.154.79 (edge droplet)
+  └→ edge Caddy vhost (forward_auth → Authentik embedded outpost, email-allowlist policy)
+       └→ reverse_proxy 100.100.113.27:3107 over Tailscale
+            └→ `tenandtwo` container on dev droplet (/opt/tenandtwo)
 ```
 
-- **Cost: $0** additional — reuses both existing droplets and Authentik.
-- Public apex `10and2talent.com` **stays on GitHub Pages** for now.
+**Implementation details:**
+
+- **Branch:** `dev` (off `main`; `main` stays the Pages/prod branch). Site image built from a root-serving variant — `Dockerfile.site` + `nginx.site.conf` (serves the Vite SPA at the domain root on :3107, vs. the `/10and2` subpath mount used on the intranet).
+- **Container:** `10and2-site:dev`, run via `/opt/tenandtwo/docker-compose.yml`, port bound to the **Tailscale IP only** (`100.100.113.27:3107`) so the un-gated raw site isn't exposed on the dev droplet's public IP.
+- **TLS:** Let's Encrypt cert auto-issued by edge Caddy.
+- **Authentik:** proxy provider `Provider for 10and2-dev` (forward_single, `https://dev.10and2talent.com`) + application `10and2-dev`, added to the embedded outpost. Access controlled by expression policy **`10and2-dev-allowlist`** (5 people + their `10and2.com`/`10and2talent.com` alias forms): nate, erich (`erichroepke@gmail.com`), nick, meredith, frith. All five verified able to log in.
+- **Accounts:** nate/erich/nick/frith/meredith all exist in Authentik (Meredith — President of Stept Studios — added to `stept-admins`/T1).
+
+> **Redeploy (manual, no CI yet):** edit on `dev`, then from a local clone:
+> `git archive --format=tar HEAD | ssh root@dev-stept-intranet 'rm -rf /opt/tenandtwo/build && mkdir -p /opt/tenandtwo/build && tar -x -C /opt/tenandtwo/build && cd /opt/tenandtwo/build && docker build -t 10and2-site:dev -f Dockerfile.site .'`
+> then `ssh root@dev-stept-intranet 'cd /opt/tenandtwo && docker compose up -d'`.
+> **CI auto-build→push→deploy on push to `dev` is the natural next improvement** (Phase 0 below).
 
 ---
 
