@@ -1,220 +1,169 @@
-import { useEffect, useState, type ReactNode } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+
+/* base-aware asset path — works under "/" (prod) and "/10and2" (intranet) */
+const asset = (p: string) =>
+  `${import.meta.env.BASE_URL.replace(/\/$/, "")}/${p.replace(/^\//, "")}`;
+
+/* Jake Rosenberg — pilot artist. Edge-to-edge portfolio grid. */
+const JAKE = {
+  name: "JAKE ROSENBERG",
+  work: [
+    "/images/talent-8.png",
+    "/images/talent-2.png",
+    "/images/talent-6.png",
+    "/images/talent-1.png",
+    "/images/talent-7.png",
+    "/images/talent-3.png",
+    "/images/talent-4.png",
+    "/images/talent-5.png",
+  ],
+};
+
+/* contact spread images (left portrait · right street) */
+const CONTACT_SPREAD = { left: "/images/talent-2.png", right: "/images/talent-3.png" };
 
 /* ----------------------------------------------------------------
-   data — 3 scroll beats from "10&2 Website" copy doc
+   tiny hash router — home | artist | contact
    ---------------------------------------------------------------- */
-const BEATS = [
-  {
-    copy: "CREATIVE TALENT REPRESENTATION",
-    photo: "/images/talent-1.png",
-    alt: "Michael B. Jordan in a racing suit",
-  },
-  {
-    copy: "ARTIST MANAGEMENT FOR CREATIVE TALENT, BUILT ON A MODERN ARTIST-FIRST APPROACH",
-    photo: "/images/talent-2.png",
-    alt: "Portrait of represented talent",
-  },
-  {
-    copy: "WE REPRESENT CREATIVE TALENT, FROM PHOTOGRAPHERS TO CREATORS, CD, AI, EXPERIENTIAL, AND BEYOND.",
-    photo: "/images/talent-3.png",
-    alt: "Portrait of represented talent",
-  },
-];
+type Route = "home" | "artist" | "contact";
+function useHashRoute(): [Route, (r: Route) => void] {
+  const parse = (): Route => {
+    const h = window.location.hash.replace(/^#\/?/, "");
+    return h === "artist" || h === "contact" ? (h as Route) : "home";
+  };
+  const [route, setRoute] = useState<Route>(parse);
+  useEffect(() => {
+    const onHash = () => {
+      setRoute(parse());
+      window.scrollTo(0, 0);
+    };
+    window.addEventListener("hashchange", onHash);
+    return () => window.removeEventListener("hashchange", onHash);
+  }, []);
+  const go = (r: Route) => {
+    window.location.hash = r === "home" ? "/" : `/${r}`;
+  };
+  return [route, go];
+}
+
+const fade = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
+  transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] as const },
+};
 
 /* ----------------------------------------------------------------
-   scroll reveal helper
+   NAV — ARTIST (left) · 10&2 (center) · CONTACT (right)
+   showBrand=false on Home (big logo already centered in body)
    ---------------------------------------------------------------- */
-function Reveal({
-  children,
-  delay = 0,
-  y = 24,
-  className,
+function Nav({
+  go,
+  current,
+  showBrand = true,
 }: {
-  children: ReactNode;
-  delay?: number;
-  y?: number;
-  className?: string;
+  go: (r: Route) => void;
+  current: Route;
+  showBrand?: boolean;
 }) {
   return (
-    <motion.div
-      className={className}
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-8% 0px" }}
-      transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1], delay }}
-    >
-      {children}
-    </motion.div>
+    <header className="topnav">
+      <button
+        className={`topnav__link topnav__link--left${current === "artist" ? " is-active" : ""}`}
+        onClick={() => go("artist")}
+      >
+        Artist
+      </button>
+      {showBrand ? (
+        <button className="topnav__brand" onClick={() => go("home")} aria-label="10&2 — home">
+          <img src={asset("logo-wordmark.png")} alt="10&2" />
+        </button>
+      ) : (
+        <span />
+      )}
+      <button
+        className={`topnav__link topnav__link--right${current === "contact" ? " is-active" : ""}`}
+        onClick={() => go("contact")}
+      >
+        Contact
+      </button>
+    </header>
   );
 }
 
 /* ----------------------------------------------------------------
-   NAV
+   PAGE 1 — HOME / SPLASH  (top-left mockup)
+   centered wordmark · tagline · CONTACT bottom-center
    ---------------------------------------------------------------- */
-function Nav() {
-  const [scrolled, setScrolled] = useState(false);
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+function Home({ go }: { go: (r: Route) => void }) {
   return (
-    <nav className={`nav${scrolled ? " scrolled" : ""}`}>
-      <div className="nav__inner">
-        <a href="#top" className="brand" aria-label="10&2 Talent — home">
-          <img src="/logo-wordmark.png" alt="10&2" className="brand__logo" />
-        </a>
-        <div className="nav__links">
-          <a href="#artists">Roster</a>
-          <a href="#contact" className="btn">
-            Contact <span className="arrow" aria-hidden="true">→</span>
-          </a>
-        </div>
-      </div>
-    </nav>
+    <motion.section className="home" {...fade}>
+      <motion.img
+        src={asset("logo-wordmark.png")}
+        alt="10&2"
+        className="home__mark"
+        initial={{ opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+      />
+      <span className="home__tag">Creative Talent Representation</span>
+      <button className="home__contact" onClick={() => go("contact")}>
+        Contact
+      </button>
+    </motion.section>
   );
 }
 
 /* ----------------------------------------------------------------
-   BEAT — split panel: left = editorial content, right = photo
-   Beat 0 = full page 6 layout (all 3 micro cols + body copy + tagline)
-   Beats 1–2 = compact (wordmark + single copy line + photo)
-   ---------------------------------------------------------------- */
-function Beat({ beat, index }: { beat: typeof BEATS[0]; index: number }) {
-  const isFirst = index === 0;
-  const isLast = index === BEATS.length - 1;
-  return (
-    <section className="beat" id={isFirst ? "top" : undefined}>
-      {/* left panel — white, editorial */}
-      <div className="beat__left">
-        {/* wordmark — first beat only */}
-        {isFirst && (
-          <motion.div
-            className="beat__mark-wrap"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.05 }}
-          >
-            <img src="/logo-wordmark.png" alt="10&2" className="beat__mark" />
-          </motion.div>
-        )}
-
-        {/* copy line — same structure all three beats */}
-        {isFirst ? (
-          <motion.div
-            className="beat__content beat__content--compact"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
-          >
-            <p className="beat__single-copy">{beat.copy}</p>
-          </motion.div>
-        ) : (
-          <Reveal className="beat__content beat__content--compact">
-            <p className="beat__single-copy">{beat.copy}</p>
-          </Reveal>
-        )}
-
-        {/* tagline — last beat only, payoff close */}
-        {isLast && (
-          <Reveal className="beat__tagline-wrap" delay={0.2}>
-            <p className="beat__tagline">THIS IS 10&2.</p>
-          </Reveal>
-        )}
-      </div>
-
-      {/* right panel — full-bleed photo */}
-      <div className="beat__photo">
-        <img src={beat.photo} alt={beat.alt} className="beat__img" />
-      </div>
-    </section>
-  );
-}
-
-/* ----------------------------------------------------------------
-   ARTISTS — roster (empty state)
-   ---------------------------------------------------------------- */
-function Artists() {
-  return (
-    <section className="section" id="artists">
-      <div className="shell">
-        <Reveal>
-          <div className="section-head">
-            <div>
-              <span className="eyebrow">Represented Talent</span>
-              <h2 className="section-title">The Roster</h2>
-            </div>
-            <span className="section-index">01 — Artists</span>
-          </div>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <p className="roster__note">
-            Our roster is curated by submission — directors, photographers, and
-            creative talent built for brands that refuse the forgettable.
-          </p>
-        </Reveal>
-      </div>
-    </section>
-  );
-}
-
-/* ----------------------------------------------------------------
-   CONTACT
+   PAGE 2 — CONTACT  (bottom-left mockup)
+   full-bleed 2-image spread + giant white 10&2, info below
    ---------------------------------------------------------------- */
 function Contact() {
   return (
-    <section className="section contact" id="contact">
-      <div className="shell">
-        <Reveal>
-          <span className="eyebrow">Start a conversation</span>
-        </Reveal>
-        <Reveal delay={0.08}>
-          <p className="contact__big">
-            Represent
-            <br />
-            the best.
-            <br />
-            <a href="mailto:info@10and2talent.com">Let's talk →</a>
-          </p>
-        </Reveal>
-        <Reveal delay={0.16}>
-          <div className="contact__row">
-            <div className="contact__col">
-              <h4>General Inquiries</h4>
-              <p>
-                <a href="mailto:info@10and2talent.com" className="link-line">
-                  info@10and2talent.com
-                </a>
-              </p>
-            </div>
-            <div className="contact__col">
-              <h4>Location</h4>
-              <p>220 W Ivy Ave</p>
-              <p>Inglewood, CA 90302</p>
-            </div>
-          </div>
-        </Reveal>
+    <motion.section className="contactpage" {...fade}>
+      <div className="cspread">
+        <div className="cspread__img"><img src={asset(CONTACT_SPREAD.left)} alt="" aria-hidden="true" /></div>
+        <div className="cspread__img"><img src={asset(CONTACT_SPREAD.right)} alt="" aria-hidden="true" /></div>
+        <img src={asset("logo-wordmark.png")} alt="10&2" className="cspread__mark" aria-hidden="true" />
       </div>
-    </section>
+      <div className="cinfo">
+        <div className="cinfo__col">
+          <h4>General Inquiries</h4>
+          <a href="mailto:info@10and2talent.com" className="link-line">info@10and2talent.com</a>
+        </div>
+        <div className="cinfo__col">
+          <h4>Artist Submissions</h4>
+          <a href="mailto:submissions@10and2talent.com" className="link-line">submissions@10and2talent.com</a>
+        </div>
+        <div className="cinfo__col">
+          <h4>Location</h4>
+          <p>220 W Ivy Ave, Inglewood, CA 90302</p>
+        </div>
+      </div>
+    </motion.section>
   );
 }
 
 /* ----------------------------------------------------------------
-   FOOTER
+   PAGE 3 — ARTIST / Jake Rosenberg  (bottom-right mockup)
+   edge-to-edge masonry grid + artist name
    ---------------------------------------------------------------- */
-function Footer() {
+function Artist() {
   return (
-    <footer className="footer">
-      <div className="footer__inner">
-        <a href="#top" className="brand" aria-label="10&2 Talent — back to top">
-          <img src="/logo-wordmark.png" alt="10&2" className="brand__logo" />
-        </a>
-        <span>© {new Date().getFullYear()} 10&2 Talent — All rights reserved.</span>
-        <span>Represented by 10&2</span>
+    <motion.section className="artistpage" {...fade}>
+      <div className="awall">
+        {JAKE.work.map((src, i) => (
+          <figure className="awall__item" key={i}>
+            <img src={asset(src)} alt={`${JAKE.name} — work`} loading="lazy" />
+          </figure>
+        ))}
       </div>
-    </footer>
+      <footer className="aname">
+        <span className="aname__role">Photographer</span>
+        <h1>{JAKE.name}</h1>
+      </footer>
+    </motion.section>
   );
 }
 
@@ -222,17 +171,15 @@ function Footer() {
    APP
    ---------------------------------------------------------------- */
 export default function App() {
+  const [route, go] = useHashRoute();
   return (
     <>
-      <Nav />
-      <main>
-        {BEATS.map((beat, i) => (
-          <Beat key={i} beat={beat} index={i} />
-        ))}
-        <Artists />
-        <Contact />
-      </main>
-      <Footer />
+      <Nav go={go} current={route} showBrand={route !== "home"} />
+      <AnimatePresence mode="wait">
+        {route === "home" && <Home key="home" go={go} />}
+        {route === "contact" && <Contact key="contact" />}
+        {route === "artist" && <Artist key="artist" />}
+      </AnimatePresence>
     </>
   );
 }
