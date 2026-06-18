@@ -125,7 +125,7 @@ function Contact() {
       <div className="cspread">
         <div className="cspread__img"><img src={asset(CONTACT_SPREAD.left)} alt="" aria-hidden="true" /></div>
         <div className="cspread__img"><img src={asset(CONTACT_SPREAD.right)} alt="" aria-hidden="true" /></div>
-        <img src={asset("logo-wordmark.png")} alt="10&2" className="cspread__mark" aria-hidden="true" />
+        <span className="cspread__mark" aria-hidden="true">10&amp;2</span>
       </div>
       <div className="cinfo">
         <div className="cinfo__col">
