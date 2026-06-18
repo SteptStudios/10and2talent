@@ -9,19 +9,19 @@ const asset = (p: string) =>
 const JAKE = {
   name: "JAKE ROSENBERG",
   work: [
-    "/images/talent-8.png",
-    "/images/talent-2.png",
-    "/images/talent-6.png",
-    "/images/talent-1.png",
-    "/images/talent-7.png",
-    "/images/talent-3.png",
-    "/images/talent-4.png",
-    "/images/talent-5.png",
+    "/images/jr-02.jpg", // Beckham × Tudor
+    "/images/jr-01.jpg", // Michael B. Jordan × Ferrari
+    "/images/jr-03.jpg", // Chanel × Camila Morrone
+    "/images/jr-06.jpg", // Mackage
+    "/images/jr-04.jpg", // Halle Berry × Joylux
+    "/images/jr-08.jpg", // David Beckham × Maserati
+    "/images/jr-05.jpg", // Ferrari Purosangue
+    "/images/jr-07.jpg", // Nina Dobrev × Reebok
   ],
 };
 
-/* contact spread images (left portrait · right street) */
-const CONTACT_SPREAD = { left: "/images/talent-2.png", right: "/images/talent-3.png" };
+/* contact spread images (two portraits) */
+const CONTACT_SPREAD = { left: "/images/jr-02.jpg", right: "/images/jr-03.jpg" };
 
 /* ----------------------------------------------------------------
    tiny hash router — home | artist | contact
@@ -77,7 +77,7 @@ function Nav({
       </button>
       {showBrand ? (
         <button className="topnav__brand" onClick={() => go("home")} aria-label="10&2 — home">
-          <img src={asset("logo-wordmark.png")} alt="10&2" />
+          <img src={asset("logo-wordmark.svg")} alt="10&2" />
         </button>
       ) : (
         <span />
@@ -100,7 +100,7 @@ function Home({ go }: { go: (r: Route) => void }) {
   return (
     <motion.section className="home" {...fade}>
       <motion.img
-        src={asset("logo-wordmark.png")}
+        src={asset("logo-wordmark.svg")}
         alt="10&2"
         className="home__mark"
         initial={{ opacity: 0, y: 14 }}
@@ -125,7 +125,7 @@ function Contact() {
       <div className="cspread">
         <div className="cspread__img"><img src={asset(CONTACT_SPREAD.left)} alt="" aria-hidden="true" /></div>
         <div className="cspread__img"><img src={asset(CONTACT_SPREAD.right)} alt="" aria-hidden="true" /></div>
-        <span className="cspread__mark" aria-hidden="true">10&amp;2</span>
+        <img src={asset("logo-wordmark.svg")} alt="10&2" className="cspread__mark" aria-hidden="true" />
       </div>
       <div className="cinfo">
         <div className="cinfo__col">
