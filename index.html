@@ -13,203 +13,210 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Special+Gothic+Expanded+One&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
-      background: #fff;
-      color: #000;
-      -webkit-font-smoothing: antialiased;
+    :root {
+      --ground:   #FFFFFF;
+      --ink:      #0A0A0A;
+      --muted:    #888888;
+      --hairline: rgba(10, 10, 10, 0.1);
+      --font-display: "Special Gothic Expanded One", "Arial Narrow", sans-serif;
+      --font-body:    "Inter Tight", system-ui, -apple-system, sans-serif;
     }
 
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--ground);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; color: inherit; cursor: pointer; background: none; border: none; }
+
     /* ── NAV ── */
-    nav {
+    .nav {
       position: fixed;
       top: 0; left: 0; right: 0;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+    }
+    .nav__inner {
+      max-width: 88rem;
+      margin-inline: auto;
+      padding: 1rem clamp(1.25rem, 0.5rem + 4vw, 5rem);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 28px 48px;
-      z-index: 100;
-      background: #fff;
+      gap: 1.5rem;
     }
-
-    nav a {
-      text-decoration: none;
-      color: #000;
-      font-family: 'Inter Tight', sans-serif;
-      font-size: 11px;
+    .brand__logo {
+      display: block;
+      height: 28px;
+      width: auto;
+    }
+    .nav__links {
+      display: flex;
+      align-items: center;
+      gap: clamp(1rem, 2vw, 2.5rem);
+    }
+    .nav__links a {
+      font-size: clamp(0.78rem, 0.74rem + 0.2vw, 0.9rem);
       font-weight: 500;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.2s ease;
     }
-
-    nav .nav-logo {
-      font-family: 'Special Gothic Expanded One', sans-serif;
-      font-size: 13px;
-      letter-spacing: 0.04em;
-    }
+    .nav__links a:hover { color: var(--ink); }
 
     /* ── HERO ── */
     .hero {
-      height: 100vh;
+      min-height: 100svh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       position: relative;
+      padding: clamp(5rem, 8vw, 9rem) clamp(1.25rem, 0.5rem + 4vw, 5rem) 5rem;
     }
-
-    .hero-wordmark {
-      font-family: 'Special Gothic Expanded One', sans-serif;
-      font-size: clamp(80px, 14vw, 180px);
-      letter-spacing: -0.02em;
-      line-height: 1;
-      color: #000;
+    .hero__mark {
+      width: min(680px, 88vw);
+      height: auto;
     }
-
-    .hero-tagline {
-      margin-top: 20px;
-      font-family: 'Inter Tight', sans-serif;
-      font-size: 11px;
+    .hero__tagline {
+      margin-top: 1.5rem;
+      font-family: var(--font-body);
+      font-size: clamp(0.78rem, 0.74rem + 0.2vw, 0.9rem);
       font-weight: 400;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: #999;
+      color: var(--muted);
     }
-
     .scroll-indicator {
       position: absolute;
-      bottom: 40px;
+      bottom: 2.5rem;
       left: 50%;
       transform: translateX(-50%);
-      font-size: 18px;
-      color: #000;
-      cursor: pointer;
-      opacity: 0.7;
+      font-size: 1.1rem;
+      color: var(--ink);
+      opacity: 0.6;
       transition: opacity 0.2s;
-      background: none;
-      border: none;
-      padding: 8px;
+      padding: 0.5rem;
       line-height: 1;
     }
-
     .scroll-indicator:hover { opacity: 1; }
 
     /* ── CONTACT ── */
     .contact {
-      min-height: 100vh;
+      min-height: 100svh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 120px 48px 80px;
+      padding: clamp(5rem, 8vw, 9rem) clamp(1.25rem, 0.5rem + 4vw, 5rem);
       text-align: center;
     }
-
-    .contact-wordmark {
-      font-family: 'Special Gothic Expanded One', sans-serif;
-      font-size: clamp(70px, 12vw, 160px);
-      letter-spacing: -0.02em;
-      line-height: 1;
-      margin-bottom: 80px;
+    .contact__mark {
+      width: min(560px, 80vw);
+      height: auto;
+      margin-bottom: clamp(3rem, 6vw, 5rem);
     }
-
-    .contact-grid {
+    .contact__grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       max-width: 960px;
       width: 100%;
     }
-
-    .contact-item {
-      padding: 0 40px;
+    .contact__item {
+      padding: 0 2.5rem;
     }
-
-    .contact-item + .contact-item {
-      border-left: 1px solid #e8e8e8;
+    .contact__item + .contact__item {
+      border-left: 1px solid var(--hairline);
     }
-
-    .contact-label {
-      font-family: 'Inter Tight', sans-serif;
-      font-size: 10px;
+    .contact__label {
+      font-size: 0.65rem;
       font-weight: 500;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: #999;
-      margin-bottom: 14px;
+      color: var(--muted);
+      margin-bottom: 0.875rem;
     }
-
-    .contact-value {
-      font-family: 'Inter Tight', sans-serif;
-      font-size: 15px;
+    .contact__value {
+      font-size: 0.95rem;
       font-weight: 400;
-      color: #000;
+      color: var(--ink);
       line-height: 1.5;
     }
-
-    .contact-value a {
-      color: #000;
-      text-decoration: none;
-    }
-
-    .contact-value a:hover { text-decoration: underline; }
+    .contact__value a:hover { text-decoration: underline; }
 
     /* ── FOOTER ── */
     footer {
-      text-align: center;
-      padding: 48px;
-      font-family: 'Inter Tight', sans-serif;
-      font-size: 11px;
-      color: #aaa;
-      letter-spacing: 0.05em;
+      border-top: 1px solid var(--hairline);
+      padding: 2rem clamp(1.25rem, 0.5rem + 4vw, 5rem);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: clamp(0.78rem, 0.74rem + 0.2vw, 0.9rem);
+    }
+    .footer__logo {
+      height: 22px;
+      width: auto;
     }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      nav { padding: 20px 24px; }
-      .contact { padding: 80px 24px 60px; }
-      .contact-grid { grid-template-columns: 1fr; gap: 48px; }
-      .contact-item { padding: 0; border-left: none !important; }
+      .contact__grid { grid-template-columns: 1fr; gap: 3rem; }
+      .contact__item { padding: 0; border-left: none !important; }
     }
   </style>
 </head>
 <body>
 
-  <nav>
-    <a href="#artists">Artist</a>
-    <a href="#" class="nav-logo">10&amp;2</a>
-    <a href="#contact">Contact</a>
+  <nav class="nav">
+    <div class="nav__inner">
+      <a href="#top" class="brand">
+        <img class="brand__logo" src="logo-wordmark.png" alt="10&amp;2 Talent" />
+      </a>
+      <div class="nav__links">
+        <a href="#artists">Artist</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
   </nav>
 
   <section class="hero" id="top">
-    <div class="hero-wordmark">10&amp;2</div>
-    <div class="hero-tagline">Creative Talent Representation</div>
+    <img class="hero__mark" src="logo-wordmark.png" alt="10&amp;2 Talent" />
+    <div class="hero__tagline">Creative Talent Representation</div>
     <button class="scroll-indicator" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})" aria-label="Scroll down">↓</button>
   </section>
 
   <section class="contact" id="contact">
-    <div class="contact-wordmark">10&amp;2</div>
-    <div class="contact-grid">
-      <div class="contact-item">
-        <div class="contact-label">General Inquiries</div>
-        <div class="contact-value"><a href="mailto:info@10and2talent.com">info@10and2talent.com</a></div>
+    <img class="contact__mark" src="logo-wordmark.png" alt="10&amp;2 Talent" />
+    <div class="contact__grid">
+      <div class="contact__item">
+        <div class="contact__label">General Inquiries</div>
+        <div class="contact__value"><a href="mailto:info@10and2talent.com">info@10and2talent.com</a></div>
       </div>
-      <div class="contact-item">
-        <div class="contact-label">Artist Submissions</div>
-        <div class="contact-value"><a href="mailto:submissions@10and2talent.com">submissions@10and2talent.com</a></div>
+      <div class="contact__item">
+        <div class="contact__label">Artist Submissions</div>
+        <div class="contact__value"><a href="mailto:submissions@10and2talent.com">submissions@10and2talent.com</a></div>
       </div>
-      <div class="contact-item">
-        <div class="contact-label">Location</div>
-        <div class="contact-value">220 W Ivy Ave<br>Inglewood, CA 90302</div>
+      <div class="contact__item">
+        <div class="contact__label">Location</div>
+        <div class="contact__value">220 W Ivy Ave<br>Inglewood, CA 90302</div>
       </div>
     </div>
   </section>
 
   <footer>
-    &copy; <span id="year"></span> 10&amp;2 Talent &mdash; All rights reserved.
+    <img class="footer__logo" src="logo-wordmark.png" alt="10&amp;2 Talent" />
+    <span>&copy; <span id="year"></span> 10&amp;2 Talent &mdash; All rights reserved.</span>
   </footer>
 
   <script>
