@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type MouseEvent, type ReactNode } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 /* base-aware asset path — works under "/" (prod) and "/10and2" (intranet) */
@@ -21,6 +21,27 @@ const WORK = [
   "/images/jr-04.jpg", "/images/jr-08.jpg", "/images/jr-05.jpg", "/images/jr-07.jpg",
 ];
 
+const sectionScrollBehavior = (): ScrollBehavior =>
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+
+function scrollToSectionId(id: string, behavior: ScrollBehavior = sectionScrollBehavior()) {
+  const target = document.getElementById(id);
+  if (!target) return false;
+  target.scrollIntoView({ behavior, block: "start", inline: "nearest" });
+  return true;
+}
+
+function scheduleHashScroll(id: string, behavior: ScrollBehavior = "auto") {
+  requestAnimationFrame(() => scrollToSectionId(id, behavior));
+  window.setTimeout(() => scrollToSectionId(id, "auto"), 300);
+}
+
+function handleSectionLinkClick(event: MouseEvent<HTMLAnchorElement>, id: string) {
+  event.preventDefault();
+  if (!scrollToSectionId(id)) return;
+  window.history.pushState(null, "", `#${id}`);
+}
+
 /* scroll reveal */
 function Reveal({ children, className }: { children: ReactNode; className?: string }) {
   return (
@@ -37,9 +58,9 @@ function Reveal({ children, className }: { children: ReactNode; className?: stri
 function Nav() {
   return (
     <header className="topnav">
-      <a className="topnav__link topnav__link--left" href="#work">Artist</a>
-      <a className="topnav__brand" href="#top" aria-label="10&2"><img src={asset("logo-wordmark.svg")} alt="10&2" /></a>
-      <a className="topnav__link topnav__link--right" href="#contact">Contact</a>
+      <a className="topnav__link topnav__link--left" href="#work" onClick={(event) => handleSectionLinkClick(event, "work")}>Artist</a>
+      <a className="topnav__brand" href="#top" aria-label="10&2" onClick={(event) => handleSectionLinkClick(event, "top")}><img src={asset("logo-wordmark.svg")} alt="10&2" /></a>
+      <a className="topnav__link topnav__link--right" href="#contact" onClick={(event) => handleSectionLinkClick(event, "contact")}>Contact</a>
     </header>
   );
 }
@@ -60,6 +81,7 @@ function Hero() {
         {COPY.tagline}
       </motion.span>
       <motion.a className="hero__cue" href="#feature" aria-label="Scroll"
+        onClick={(event) => handleSectionLinkClick(event, "feature")}
         initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.4 }}>↓</motion.a>
     </section>
   );
@@ -146,6 +168,17 @@ function Contact() {
 
 /* ---------------- APP — one scroll ---------------- */
 export default function App() {
+  useEffect(() => {
+    const handleHashChange = () => {
+      const id = window.location.hash.slice(1);
+      if (id) scheduleHashScroll(id);
+    };
+
+    handleHashChange();
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, []);
+
   return (
     <>
       <Nav />
