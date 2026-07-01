@@ -73,7 +73,7 @@ Loaded via Google Fonts in `index.html`.
 
 - **Subjects:** licensed photography by represented talent. The current set is **Jake Rosenberg**'s portfolio (celebrity portrait + campaign work).
 - **Treatment:** full-bleed, edge-to-edge. B&W and color both in play.
-- **Current assets:** `public/images/talent-1..8.png` — Jake Rosenberg's licensed work, used on the Artist page grid + Home/Contact spreads.
+- **Current assets:** `public/images/feat-*.jpg`, `public/images/black-*.jpg`, and `public/images/jr-*.jpg` — Jake Rosenberg's licensed work, used across the splash, spreads, horizontal reel, and contact.
 
 > Higher-resolution exports welcome as Jake's full archive comes in (Linear **ERI-2648**), but the current images are real, licensed portfolio work — not placeholders.
 
@@ -92,7 +92,7 @@ Loaded via Google Fonts in `index.html`.
 ## 8. Repos & deploy
 
 - **Canonical (live):** `SteptStudios/10and2talent` → GitHub Pages → **10and2talent.com** (push to `main` auto-deploys).
-- **This copy:** `Stept-Intranet/apps/10and2` (served at base `/10and2`). Legacy per Linear **STE-740**; canonical is source of truth. Asset paths use a base-aware `asset()` helper so they resolve under both `/` and `/10and2`.
+- **Intranet mirror:** `Stept-Intranet/apps/10and2` (served at base `/10and2`). Canonical public repo remains source of truth. Asset paths use a base-aware `asset()` helper so they resolve under both `/` and `/10and2`.
 
 ---
 
@@ -101,4 +101,4 @@ Loaded via Google Fonts in `index.html`.
 - [ ] Confirm brand red hex (ERI-2650)
 - [ ] Jake Rosenberg full archive / higher-res exports as available (ERI-2648)
 - [x] Live on canonical `SteptStudios/10and2talent` → 10and2talent.com
-- [ ] DNS / GitHub Pages domain verify (ERI-2649)
+- [x] DNS / GitHub Pages domain verify (ERI-2649)
