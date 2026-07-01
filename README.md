@@ -74,5 +74,4 @@ Single scroll:
 |---|---|---|
 | Brand red confirmation | Meredith / Nick | Current red accent is `#B81500` |
 | Jake Rosenberg archive | Erich / Nick | Higher-res exports as available |
-| Custom domain DNS verification | Nate | `10and2talent.com` CNAME / GitHub Pages verification |
 | Steptopedia entity profile for 10&2 | Erich | Links to/from Stept intranet |
