@@ -3,225 +3,247 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>10&amp;2 Talent — Creative Talent Representation</title>
-  <meta name="description" content="10&amp;2 Talent — Creative talent representation. Artist management for photographers, creators, CDs, and beyond." />
-  <meta name="theme-color" content="#ffffff" />
-  <meta property="og:title" content="10&amp;2 Talent — Creative Talent Representation" />
-  <meta property="og:description" content="Representation for creative talent, built on a modern artist-first approach." />
+  <title>10 and 2 Talent — Coming Soon</title>
+  <meta name="description" content="10 and 2 Talent is coming soon. Leave your details and we'll be in touch." />
+
+  <!-- Open Graph (for nice link previews when shared) -->
+  <meta property="og:title" content="10 and 2 Talent — Coming Soon" />
+  <meta property="og:description" content="Something new is on the way. Leave your details and we'll be in touch." />
   <meta property="og:type" content="website" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Special+Gothic+Expanded+One&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet" />
+
   <style>
     :root {
-      --ground:   #FFFFFF;
-      --ink:      #0A0A0A;
-      --muted:    #888888;
-      --hairline: rgba(10, 10, 10, 0.1);
-      --font-display: "Special Gothic Expanded One", "Arial Narrow", sans-serif;
-      --font-body:    "Inter Tight", system-ui, -apple-system, sans-serif;
+      --bg: #0a0a0b;
+      --bg-elev: #141416;
+      --fg: #f2f2f0;
+      --muted: #8a8a85;
+      --line: #2a2a2e;
+      --accent: #f2f2f0;
+      --accent-fg: #0a0a0b;
     }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    * { box-sizing: border-box; }
+
+    html, body { height: 100%; }
+
     body {
-      font-family: var(--font-body);
-      background: var(--ground);
-      color: var(--ink);
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
       -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-    }
-    img { display: block; max-width: 100%; }
-    a { color: inherit; text-decoration: none; }
-    button { font: inherit; color: inherit; cursor: pointer; background: none; border: none; }
-
-    /* ── NAV ── */
-    .nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 50;
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(12px);
-    }
-    .nav__inner {
-      max-width: 88rem;
-      margin-inline: auto;
-      padding: 1rem clamp(1.25rem, 0.5rem + 4vw, 5rem);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1.5rem;
-    }
-    .brand__logo {
-      display: block;
-      height: 28px;
-      width: auto;
-    }
-    .nav__links {
-      display: flex;
-      align-items: center;
-      gap: clamp(1rem, 2vw, 2.5rem);
-    }
-    .nav__links a {
-      font-size: clamp(0.78rem, 0.74rem + 0.2vw, 0.9rem);
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted);
-      transition: color 0.2s ease;
-    }
-    .nav__links a:hover { color: var(--ink); }
-
-    /* ── HERO ── */
-    .hero {
-      min-height: 100svh;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      padding: clamp(5rem, 8vw, 9rem) clamp(1.25rem, 0.5rem + 4vw, 5rem) 5rem;
-    }
-    .hero__mark {
-      width: min(680px, 88vw);
-      height: auto;
-    }
-    .hero__tagline {
-      margin-top: 1.5rem;
-      font-family: var(--font-body);
-      font-size: clamp(0.78rem, 0.74rem + 0.2vw, 0.9rem);
-      font-weight: 400;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .scroll-indicator {
-      position: absolute;
-      bottom: 2.5rem;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 1.1rem;
-      color: var(--ink);
-      opacity: 0.6;
-      transition: opacity 0.2s;
-      padding: 0.5rem;
-      line-height: 1;
-    }
-    .scroll-indicator:hover { opacity: 1; }
-
-    /* ── CONTACT ── */
-    .contact {
-      min-height: 100svh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: clamp(5rem, 8vw, 9rem) clamp(1.25rem, 0.5rem + 4vw, 5rem);
-      text-align: center;
-    }
-    .contact__mark {
-      width: min(560px, 80vw);
-      height: auto;
-      margin-bottom: clamp(3rem, 6vw, 5rem);
-    }
-    .contact__grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      max-width: 960px;
-      width: 100%;
-    }
-    .contact__item {
-      padding: 0 2.5rem;
-    }
-    .contact__item + .contact__item {
-      border-left: 1px solid var(--hairline);
-    }
-    .contact__label {
-      font-size: 0.65rem;
-      font-weight: 500;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 0.875rem;
-    }
-    .contact__value {
-      font-size: 0.95rem;
-      font-weight: 400;
-      color: var(--ink);
+      min-height: 100vh;
       line-height: 1.5;
     }
-    .contact__value a:hover { text-decoration: underline; }
 
-    /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--hairline);
-      padding: 2rem clamp(1.25rem, 0.5rem + 4vw, 5rem);
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(60% 50% at 50% 35%, rgba(255,255,255,0.05), transparent 70%);
+      pointer-events: none;
+    }
+
+    main {
+      flex: 1;
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
       align-items: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-      color: var(--muted);
-      font-size: clamp(0.78rem, 0.74rem + 0.2vw, 0.9rem);
-    }
-    .footer__logo {
-      height: 22px;
-      width: auto;
+      justify-content: center;
+      text-align: center;
+      padding: 48px 24px;
+      position: relative;
     }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 768px) {
-      .contact__grid { grid-template-columns: 1fr; gap: 3rem; }
-      .contact__item { padding: 0; border-left: none !important; }
+    .eyebrow {
+      font-size: 13px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 28px;
     }
+
+    .wordmark {
+      font-size: clamp(2px, 0.45vw, 4.4px);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin: 0;
+      line-height: 1.05;
+    }
+
+    .wordmark .num { font-weight: 300; }
+
+    .tagline {
+      margin: 22px auto 0;
+      max-width: 460px;
+      color: var(--muted);
+      font-size: clamp(3.75px, 0.6vw, 4.5px);
+    }
+
+    form {
+      margin-top: 44px;
+      width: 100%;
+      max-width: 420px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      text-align: left;
+    }
+
+    .field-label {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    input, textarea {
+      width: 100%;
+      background: var(--bg-elev);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: var(--fg);
+      font: inherit;
+      font-size: 15px;
+      padding: 13px 14px;
+      outline: none;
+      transition: border-color 0.15s ease, background 0.15s ease;
+    }
+
+    input::placeholder, textarea::placeholder { color: #5a5a57; }
+
+    input:focus, textarea:focus {
+      border-color: #555;
+      background: #18181b;
+    }
+
+    textarea { resize: vertical; min-height: 72px; }
+
+    button {
+      margin-top: 6px;
+      background: var(--accent);
+      color: var(--accent-fg);
+      border: none;
+      border-radius: 10px;
+      font: inherit;
+      font-weight: 600;
+      font-size: 15px;
+      padding: 14px 16px;
+      cursor: pointer;
+      transition: opacity 0.15s ease, transform 0.05s ease;
+    }
+
+    button:hover { opacity: 0.88; }
+    button:active { transform: translateY(1px); }
+    button:disabled { opacity: 0.5; cursor: default; }
+
+    .status {
+      margin-top: 14px;
+      font-size: 14px;
+      min-height: 20px;
+    }
+    .status.success { color: #7fdca4; }
+    .status.error { color: #e08585; }
+
+    .thanks {
+      margin-top: 44px;
+      max-width: 420px;
+      padding: 28px 24px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--bg-elev);
+      display: none;
+    }
+    .thanks h2 { margin: 0 0 8px; font-size: 20px; }
+    .thanks p { margin: 0; color: var(--muted); font-size: 15px; }
+
+    footer {
+      text-align: center;
+      padding: 28px 24px;
+      color: #5a5a57;
+      font-size: 13px;
+      position: relative;
+    }
+
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--fg); }
   </style>
 </head>
 <body>
-
-  <nav class="nav">
-    <div class="nav__inner">
-      <a href="#top" class="brand">
-        <img class="brand__logo" src="logo-wordmark.png" alt="10&amp;2 Talent" />
-      </a>
-      <div class="nav__links">
-        <a href="#artists">Artist</a>
-        <a href="#contact">Contact</a>
+  <main>
+    <p class="eyebrow">Coming Soon</p>
+    <h1 class="wordmark"><span class="num">10</span> and <span class="num">2</span> Talent</h1>
+    <p class="tagline">
+      We're building a network of the best global creative talent.
+      Leave your details:
+    </p>
+    <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <div>
+        <label class="field-label" for="name">Name</label>
+        <input id="name" name="name" type="text" placeholder="Your name" required />
       </div>
+      <div>
+        <label class="field-label" for="email">Email</label>
+        <input id="email" name="email" type="email" placeholder="you@example.com" required />
+      </div>
+      <div>
+        <label class="field-label" for="message">What can we help with? <span style="opacity:.6">(optional)</span></label>
+        <textarea id="message" name="message" placeholder="Tell us a little about you or your project"></textarea>
+      </div>
+      <button type="submit" id="submit-btn">Keep me posted</button>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+    </form>
+    <div class="thanks" id="thanks">
+      <h2>You're on the list.</h2>
+      <p>Thanks for reaching out — we'll be in touch soon.</p>
     </div>
-  </nav>
-
-  <section class="hero" id="top">
-    <img class="hero__mark" src="logo-wordmark.png" alt="10&amp;2 Talent" />
-    <div class="hero__tagline">Creative Talent Representation</div>
-    <button class="scroll-indicator" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})" aria-label="Scroll down">↓</button>
-  </section>
-
-  <section class="contact" id="contact">
-    <img class="contact__mark" src="logo-wordmark.png" alt="10&amp;2 Talent" />
-    <div class="contact__grid">
-      <div class="contact__item">
-        <div class="contact__label">General Inquiries</div>
-        <div class="contact__value"><a href="mailto:info@10and2talent.com">info@10and2talent.com</a></div>
-      </div>
-      <div class="contact__item">
-        <div class="contact__label">Artist Submissions</div>
-        <div class="contact__value"><a href="mailto:submissions@10and2talent.com">submissions@10and2talent.com</a></div>
-      </div>
-      <div class="contact__item">
-        <div class="contact__label">Location</div>
-        <div class="contact__value">220 W Ivy Ave<br>Inglewood, CA 90302</div>
-      </div>
-    </div>
-  </section>
-
+  </main>
   <footer>
-    <img class="footer__logo" src="logo-wordmark.png" alt="10&amp;2 Talent" />
-    <span>&copy; <span id="year"></span> 10&amp;2 Talent &mdash; All rights reserved.</span>
+    &copy; <span id="year"></span> 10 and 2 Talent &nbsp;·&nbsp;
+    <a href="mailto:info@10and2.com">info@10and2.com</a>
   </footer>
-
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+    document.getElementById("year").textContent = new Date().getFullYear();
+    const form = document.getElementById("contact-form");
+    const statusEl = document.getElementById("status");
+    const btn = document.getElementById("submit-btn");
+    const thanks = document.getElementById("thanks");
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      statusEl.className = "status";
+      statusEl.textContent = "";
+      if (form.action.includes("YOUR_FORM_ID")) {
+        statusEl.className�� "status error";
+        statusEl.textContent = "Form isn't connected yet.";
+        return;
+      }
+      btn.disabled = true;
+      btn.textContent = "Sending…";
+      try {
+        const res = await fetch(form.action, {
+          method: "POST",
+          body: new FormData(form),
+          headers: { Accept: "application/json" },
+        });
+        if (res.ok) {
+          form.style.display = "none";
+          thanks.style.display = "block";
+        } else {
+          const data = await res.json().catch(() => ({}));
+          statusEl.className = "status error";
+          statusEl.textContent = (data.errors && data.errors[0] && data.errors[0].message) || "Something went wrong.";
+          btn.disabled = false;
+          btn.textContent = "Keep me posted";
+        }
+      } catch (err) {
+        statusEl.className = "status error";
+        statusEl.textContent = "Network error. Please try again.";
+        btn.disabled = false;
+        btn.textContent = "Keep me posted";
+      }
+    });
   </script>
-
 </body>
 </html>
