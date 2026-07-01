@@ -14,11 +14,20 @@ const COPY = {
 /* feature shots chosen for face-high / space-below composition (logo never hits a face) */
 const FEATURE = { left: "/images/feat-1.jpg", right: "/images/feat-2.jpg" };
 /* strongest single-subject frames for the black section */
-const BLACK = ["/images/black-1.jpg", "/images/black-2.jpg"];
+const BLACK = [
+  { src: "/images/black-1.jpg", alt: "David Beckham training with a red medicine ball" },
+  { src: "/images/black-2.jpg", alt: "Black-and-white portrait of Halle Berry" },
+];
 /* Jake Rosenberg — horizontal portfolio reel */
 const WORK = [
-  "/images/jr-02.jpg", "/images/jr-01.jpg", "/images/jr-03.jpg", "/images/jr-06.jpg",
-  "/images/jr-04.jpg", "/images/jr-08.jpg", "/images/jr-05.jpg", "/images/jr-07.jpg",
+  { src: "/images/jr-02.jpg", alt: "David Beckham seated in a car" },
+  { src: "/images/jr-01.jpg", alt: "Man standing beside a red sports car viewed through a car interior" },
+  { src: "/images/jr-03.jpg", alt: "Woman carrying a Chanel surfboard" },
+  { src: "/images/jr-06.jpg", alt: "Athlete running across a rocky mountain slope" },
+  { src: "/images/jr-04.jpg", alt: "Halle Berry holding a printed card" },
+  { src: "/images/jr-08.jpg", alt: "David Beckham walking beside a red Maserati" },
+  { src: "/images/jr-05.jpg", alt: "Red Maserati driving through snow-covered trees" },
+  { src: "/images/jr-07.jpg", alt: "Athlete seated during a workout" },
 ];
 
 const sectionScrollBehavior = (): ScrollBehavior =>
@@ -113,10 +122,30 @@ function JakeScroll() {
   const track = useRef<HTMLDivElement>(null);
   const [dist, setDist] = useState(0);
   useEffect(() => {
-    const calc = () => { if (track.current) setDist(Math.max(0, track.current.scrollWidth - window.innerWidth)); };
-    const t = setTimeout(calc, 60); calc();
+    const trackEl = track.current;
+    if (!trackEl) return;
+
+    const calc = () => setDist(Math.max(0, trackEl.scrollWidth - window.innerWidth));
+    const resizeObserver = new ResizeObserver(calc);
+    const images = Array.from(trackEl.querySelectorAll("img"));
+    const animationFrame = requestAnimationFrame(calc);
+
+    resizeObserver.observe(trackEl);
+    images.forEach((image) => {
+      image.addEventListener("load", calc);
+      image.addEventListener("error", calc);
+    });
     window.addEventListener("resize", calc);
-    return () => { clearTimeout(t); window.removeEventListener("resize", calc); };
+
+    return () => {
+      cancelAnimationFrame(animationFrame);
+      resizeObserver.disconnect();
+      images.forEach((image) => {
+        image.removeEventListener("load", calc);
+        image.removeEventListener("error", calc);
+      });
+      window.removeEventListener("resize", calc);
+    };
   }, []);
   const { scrollYProgress } = useScroll({ target: sec, offset: ["start start", "end end"] });
   const x = useTransform(scrollYProgress, [0, 1], [0, -dist]);
@@ -128,8 +157,8 @@ function JakeScroll() {
           <h2>JAKE ROSENBERG</h2>
         </div>
         <motion.div ref={track} className="jake__track" style={{ x }}>
-          {WORK.map((s, i) => (
-            <figure className="jake__card" key={i}><img src={asset(s)} alt="Jake Rosenberg — work" /></figure>
+          {WORK.map((item) => (
+            <figure className="jake__card" key={item.src}><img src={asset(item.src)} alt={item.alt} /></figure>
           ))}
         </motion.div>
       </div>
@@ -143,8 +172,8 @@ function BlackShowcase() {
     <section className="black">
       <Reveal className="black__lead"><span>Represented by 10&2</span></Reveal>
       <div className="black__grid">
-        {BLACK.map((s, i) => (
-          <figure className="black__item" key={i}><img src={asset(s)} alt="Represented talent" /></figure>
+        {BLACK.map((item) => (
+          <figure className="black__item" key={item.src}><img src={asset(item.src)} alt={item.alt} /></figure>
         ))}
       </div>
     </section>
