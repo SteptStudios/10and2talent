@@ -1,3 +1,16 @@
+> ⚠️ **CURRENT LIVE-SITE POLICY — updated 2026-07-02. Read before deploying.**
+>
+> The public site at **`10and2talent.com` is a static landing page only**: the 10&2
+> wordmark, the "Creative Talent Representation" tagline, and contact info. **No photos
+> / no photo-forward portfolio on the live root right now.** This is per Nick's direction
+> (relayed by Nate).
+>
+> **@erichroepke** — the React photo-forward portfolio is preserved in `src/` and is not
+> lost. Experimentation with it should go to **`10and2talent.com/preview`**, not the
+> production landing page. Please don't restore the photo build to the live root again
+> without sign-off from Nick/Nate. Everything below documents that experimental
+> photo build — it is **not** the current public page.
+
 # 10&2 Talent
 
 Creative talent representation agency. Artist management built on a modern, artist-first approach.
